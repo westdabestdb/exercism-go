@@ -1,27 +1,21 @@
 package raindrops
 
 import (
-	"fmt"
+	"strconv"
 )
 
 //Convert function takes an integer as parameter, finds this number's factors, and based on factors, returns a string or returns the number based on conditions.
 func Convert(number int) string {
-	var drop string                //define an empty string
-	for i := 1; i <= number; i++ { //run a loop from 1 to number,
-		if number%i == 0 { //if index divides number without any reminder, check for the number
-			if i == 3 { // if number is equal to 3
-				drop += "Pling" //append this string to drop string
-			} else if i == 5 { // else if number is equal to 5
-				drop += "Plang" //append this string to drop string
-			} else if i == 7 { // else if number is equal to 7
-				drop += "Plong" //append this string to drop string
-			} else { //if none of these matches the current index
-				if i == number && drop == "" { //checks for if index equals to number and if there was no 3,5,7 as factors,
-					drop = fmt.Sprint(i) //sets the drop string equal to the string value of number
-				}
-			}
+	var lookFor = []int{3, 5, 7}                            //defines a slice for the numbers we are looking for
+	var raindropSpeak = []string{"Pling", "Plang", "Plong"} //defines a slice for strings corresponding to these numbers
+	var drop string                                         //defines empty string
+	for _i, v := range lookFor {                            //running a loop inside lookFor slice
+		if number%v == 0 { //if value divides number without any reminder
+			drop += raindropSpeak[_i] //appends corresponding raindropSpeak string to drop string
 		}
 	}
-	return drop
-
+	if drop == "" { //if there is no factor
+		drop = strconv.Itoa(number) //appends string value of number to drop string
+	}
+	return drop //returns drop
 }
